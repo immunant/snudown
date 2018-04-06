@@ -10,6 +10,11 @@ import subprocess
 import fnmatch
 import distutils.command.build
 
+import sys
+SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
+sys.path.append(os.path.join(SCRIPT_DIR, os.path.pardir))
+import translate
+
 # Change these to the correct paths
 c2rust_path     = os.path.realpath(os.path.join(os.getcwd(), "..", "..", ".."))
 cc_wrapper_path = c2rust_path + "/cross-checks/c-checks/clang-plugin/cc_wrapper.sh"
@@ -21,7 +26,7 @@ clevrbuf_path   = c2rust_path + "/cross-checks/ReMon/libclevrbuf"
 
 plugin_args = ['-Xclang', '-plugin-arg-crosschecks',
                '-Xclang', '-C../snudown_c.c2r',
-               '-ffunction-sections', # Used by --icf
+               '-ffunction-sections',  # Used by --icf
                ]
 
 def c_files_in(directory):
@@ -165,18 +170,22 @@ class BuildSnudown(distutils.command.build.build):
 
     def run(self, *args, **kwargs):
         if self.translate is not None:
-            subprocess.check_call(["../translate.sh", "translate"])
+            # subprocess.check_call(["../translate.sh", "translate"])
+            translate.main(xcheck=False)
             extensions.append(self.build_extension())
 
         if self.rust_crosschecks is not None:
-            subprocess.check_call(["../translate.sh", "rustcheck"])
+            # subprocess.check_call(["../translate.sh", "rustcheck"])
+            translate.main(xcheck=True)
             extensions.append(self.build_extension())
 
         if self.clang_crosschecks is not None:
-            subprocess.check_call(["../translate.sh"])
+            # subprocess.check_call(["../translate.sh"])
+            translate.generate_html_entries_header()
             extensions.append(self.build_extension())
 
         distutils.command.build.build.run(self, *args, **kwargs)
+
 
 class GPerfingBuildExt(build_ext):
     def run(self):
