@@ -171,17 +171,17 @@ class BuildSnudown(distutils.command.build.build):
     def run(self, *args, **kwargs):
         if self.translate is not None:
             # subprocess.check_call(["../translate.sh", "translate"])
-            translate.main(xcheck=False)
+            translate.main(xcheck=False, snudown=os.getcwd())
             extensions.append(self.build_extension())
 
         if self.rust_crosschecks is not None:
             # subprocess.check_call(["../translate.sh", "rustcheck"])
-            translate.main(xcheck=True)
+            translate.main(xcheck=True, snudown=os.getcwd())
             extensions.append(self.build_extension())
 
         if self.clang_crosschecks is not None:
             # subprocess.check_call(["../translate.sh"])
-            translate.generate_html_entries_header()
+            translate.generate_html_entries_header(snudown=os.getcwd())
             extensions.append(self.build_extension())
 
         distutils.command.build.build.run(self, *args, **kwargs)
