@@ -11,9 +11,11 @@ import fnmatch
 import distutils.command.build
 
 import sys
+IN_PYTHON3 = sys.version_info[0] >= 3
 SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
-sys.path.append(os.path.join(SCRIPT_DIR, os.path.pardir))
-import translate
+if IN_PYTHON3:
+    sys.path.append(os.path.join(SCRIPT_DIR, os.path.pardir))
+    import translate
 
 # Change these to the correct paths
 c2rust_path     = os.path.realpath(os.path.join(os.getcwd(), "..", "..", ".."))
@@ -171,17 +173,29 @@ class BuildSnudown(distutils.command.build.build):
     def run(self, *args, **kwargs):
         if self.translate is not None:
             # subprocess.check_call(["../translate.sh", "translate"])
-            translate.main(xcheck=False, snudown=SCRIPT_DIR)
+            if IN_PYTHON3:
+                translate.main(xcheck=False, snudown=SCRIPT_DIR)
+            else:
+                subprocess.check_call(["python3", "../translate.py",
+                                       "translate", SCRIPT_DIR])
             extensions.append(self.build_extension())
 
         if self.rust_crosschecks is not None:
             # subprocess.check_call(["../translate.sh", "rustcheck"])
-            translate.main(xcheck=True, snudown=SCRIPT_DIR)
+            if IN_PYTHON3:
+                translate.main(xcheck=True, snudown=SCRIPT_DIR)
+            else:
+                subprocess.check_call(["python3", "../translate.py",
+                                       "rustcheck", SCRIPT_DIR])
             extensions.append(self.build_extension())
 
         if self.clang_crosschecks is not None:
             # subprocess.check_call(["../translate.sh"])
-            translate.generate_html_entries_header(snudown=SCRIPT_DIR)
+            if IN_PYTHON3:
+                translate.generate_html_entries_header(snudown=SCRIPT_DIR)
+            else:
+                subprocess.check_call(["python3", "../translate.py",
+                                       "html_entities", SCRIPT_DIR])
             extensions.append(self.build_extension())
 
         distutils.command.build.build.run(self, *args, **kwargs)
