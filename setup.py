@@ -18,13 +18,14 @@ if IN_PYTHON3:
     import translate
 
 # Change these to the correct paths
-c2rust_path     = os.path.realpath(os.path.join(os.getcwd(), "..", "..", ".."))
-cc_wrapper_path = c2rust_path + "/cross-checks/c-checks/clang-plugin/cc_wrapper.sh"
-cc_path         = c2rust_path + "/dependencies/llvm-6.0.0/build.{}/bin/clang".format(platform.uname()[1])
-plugin_path     = c2rust_path + "/cross-checks/c-checks/clang-plugin/build/plugin/CrossChecks.so"
-runtime_path    = c2rust_path + "/cross-checks/c-checks/clang-plugin/build/runtime/libruntime.a"
-fakechecks_path = c2rust_path + "/cross-checks/libfakechecks"
-clevrbuf_path   = c2rust_path + "/cross-checks/ReMon/libclevrbuf"
+C2RUST_DIR = os.path.realpath(os.path.join(SCRIPT_DIR, os.path.pardir,
+                                           os.path.pardir, os.path.pardir))
+cc_wrapper_path = C2RUST_DIR + "/cross-checks/c-checks/clang-plugin/cc_wrapper.sh"
+cc_path         = C2RUST_DIR + "/dependencies/llvm-6.0.0/build.{}/bin/clang".format(platform.uname()[1])
+plugin_path     = C2RUST_DIR + "/cross-checks/c-checks/clang-plugin/build/plugin/CrossChecks.so"
+runtime_path    = C2RUST_DIR + "/cross-checks/c-checks/clang-plugin/build/runtime/libruntime.a"
+fakechecks_path = C2RUST_DIR + "/cross-checks/libfakechecks"
+clevrbuf_path   = C2RUST_DIR + "/cross-checks/ReMon/libclevrbuf"
 
 plugin_args = ['-Xclang', '-plugin-arg-crosschecks',
                '-Xclang', '-C../snudown_c.c2r',
