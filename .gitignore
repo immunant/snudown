@@ -6,6 +6,7 @@ src/html_entities.h
 *.so
 *.so.*
 *.o
+*.log
 /fuzzing/bin
 /fuzzing/testing
 
