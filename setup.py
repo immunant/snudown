@@ -55,16 +55,16 @@ extensions = [
         name='snudown',
         sources=['snudown.c', 'src/bufprintf.c'] + c_files_in('html/'),
         include_dirs=['src', 'html'],
-        libraries=['snudownrust'],
-        library_dirs=['translator-build']
+        libraries=['c2rust_build'],
+        library_dirs=['c2rust-build/target/debug']
     ),
     Extension(
         name='snudown',
         sources=['snudown.c', 'src/bufprintf.c'] + c_files_in('html/'),
         include_dirs=['src', 'html'],
-        #libraries=['snudownrustxcheck', 'fakechecks'],
-        libraries=['snudownrustxcheck', 'clevrbuf'],
-        library_dirs=['translator-build', fakechecks_path, clevrbuf_path],
+        #libraries=['c2rust_build', 'fakechecks'],
+        libraries=['c2rust_build', 'clevrbuf'],
+        library_dirs=['c2rust_build/target/debug', fakechecks_path, clevrbuf_path],
         extra_link_args=['-Wl,-rpath,{},-rpath,{}'.format(fakechecks_path, clevrbuf_path)],
     ),
     Extension(
@@ -126,16 +126,16 @@ class BuildSnudown(distutils.command.build.build):
         extensions.pop()
         if self.translate is not None:
             sources.append('src/bufprintf.c')
-            library_dirs.append('translator-build')
-            libraries.append('snudownrust')
+            library_dirs.append('c2rust-build/target/debug')
+            libraries.append('c2rust_build')
 
         if self.rust_crosschecks is not None:
             sources.append('src/bufprintf.c')
-            library_dirs.extend(['translator-build', fakechecks_path, clevrbuf_path])
+            library_dirs.extend(['c2rust-build/target/debug', fakechecks_path, clevrbuf_path])
             if self.use_fakechecks is not None:
-                libraries.extend(['snudownrustxcheck', 'fakechecks'])
+                libraries.extend(['c2rust_build', 'fakechecks'])
             else:
-                libraries.extend(['snudownrustxcheck', 'clevrbuf'])
+                libraries.extend(['c2rust_build', 'clevrbuf'])
             holder = ['-Wl,-rpath,{},-rpath,{}'.format(fakechecks_path, clevrbuf_path)]
             extra_link_args.extend(holder)
 
