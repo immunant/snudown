@@ -20,10 +20,11 @@ if IN_PYTHON3:
 # Change these to the correct paths
 C2RUST_DIR = os.path.realpath(os.path.join(SCRIPT_DIR, os.path.pardir,
                                            os.path.pardir, os.path.pardir))
+machine_name = platform.uname()[1]
 cc_wrapper_path = C2RUST_DIR + "/cross-checks/c-checks/clang-plugin/cc_wrapper.sh"
-cc_path         = C2RUST_DIR + "/dependencies/llvm-6.0.0/build.{}/bin/clang".format(platform.uname()[1])
-plugin_path     = C2RUST_DIR + "/cross-checks/c-checks/clang-plugin/build/plugin/CrossChecks.so"
-runtime_path    = C2RUST_DIR + "/cross-checks/c-checks/clang-plugin/build/runtime/libruntime.a"
+cc_path         = C2RUST_DIR + "/dependencies/llvm-6.0.0/build.{}/bin/clang".format(machine_name)
+plugin_path     = C2RUST_DIR + "/dependencies/clang-xcheck-plugin.{}/plugin/CrossChecks.so".format(machine_name)
+runtime_path    = C2RUST_DIR + "/dependencies/clang-xcheck-plugin.{}/runtime/libruntime.a".format(machine_name)
 fakechecks_path = C2RUST_DIR + "/cross-checks/libfakechecks"
 clevrbuf_path   = C2RUST_DIR + "/cross-checks/ReMon/libclevrbuf"
 
