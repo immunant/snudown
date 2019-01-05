@@ -29,7 +29,7 @@ fakechecks_path = C2RUST_DIR + "/cross-checks/libfakechecks"
 clevrbuf_path   = C2RUST_DIR + "/cross-checks/ReMon/libclevrbuf"
 
 plugin_args = ['-Xclang', '-plugin-arg-crosschecks',
-               '-Xclang', '-C../snudown_c.c2r',
+               '-Xclang', '-Cxchecks/snudown_c.c2r',
                '-ffunction-sections',  # Used by --icf
                ]
 
@@ -70,7 +70,7 @@ extensions = [
     ),
     Extension(
         name='snudown',
-        sources=['snudown.c', '../xchecks.c'] + c_files_in('src/') + c_files_in('html/'),
+        sources=['snudown.c', 'xchecks/xchecks.c'] + c_files_in('src/') + c_files_in('html/'),
         include_dirs=['src', 'html'],
         library_dirs=[fakechecks_path, clevrbuf_path],
         #libraries=["fakechecks"],
@@ -144,7 +144,7 @@ class BuildSnudown(distutils.command.build.build):
             # Set the compiler path to cc_wrapper.sh
             os.environ["CC"] = "{cc_wrapper} {cc} {plugin}".format(
                     cc_wrapper=cc_wrapper_path, cc=cc_path, plugin=plugin_path)
-            sources.append('../xchecks.c')
+            sources.append('xchecks/xchecks.c')
             sources.extend(c_files_in('src/'))
             library_dirs.extend([fakechecks_path, clevrbuf_path])
             if self.use_fakechecks is not None:
