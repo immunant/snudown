@@ -30,7 +30,7 @@ fakechecks_path = C2RUST_DIR + "/cross-checks/libfakechecks"
 clevrbuf_path   = C2RUST_DIR + "/cross-checks/ReMon/libclevrbuf"
 
 plugin_args = ['-Xclang', '-plugin-arg-crosschecks',
-               '-Xclang', '-Cxchecks/snudown_c.c2r',
+               '-Xclang', '-Cxchecks/snudown_c.yaml',
                '-ffunction-sections',  # Used by --icf
                ]
 
