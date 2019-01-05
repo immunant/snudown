@@ -22,7 +22,8 @@ C2RUST_DIR = os.path.realpath(os.path.join(SCRIPT_DIR, os.path.pardir,
                                            os.path.pardir, os.path.pardir))
 machine_name = platform.uname()[1]
 cc_wrapper_path = C2RUST_DIR + "/cross-checks/c-checks/clang-plugin/cc_wrapper.sh"
-cc_path         = C2RUST_DIR + "/dependencies/llvm-6.0.1/build.{}/bin/clang".format(machine_name)
+#cc_path         = C2RUST_DIR + "/dependencies/llvm-6.0.1/build.{}/bin/clang".format(machine_name)
+cc_path         = "/usr/bin/clang"
 plugin_path     = C2RUST_DIR + "/dependencies/clang-xcheck-plugin.{}/plugin/CrossChecks.so".format(machine_name)
 runtime_path    = C2RUST_DIR + "/dependencies/clang-xcheck-plugin.{}/runtime/libruntime.a".format(machine_name)
 fakechecks_path = C2RUST_DIR + "/cross-checks/libfakechecks"
