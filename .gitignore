@@ -13,3 +13,4 @@ src/html_entities.h
 compile_commands.json
 *.c.cbor
 translator-build/
+c2rust/
