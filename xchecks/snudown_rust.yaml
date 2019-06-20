@@ -1,6 +1,6 @@
 # Cross-check configuration file for the Rust version of snudown
 ---
-../src/autolink.rs:
+src/autolink.rs:
     - item: defaults
       all_args: default
 
@@ -9,7 +9,7 @@
       fields:
         data: disabled # FIXME: hash up to buf.size bytes
 
-../src/buffer.rs:
+src/buffer.rs:
     - item: defaults
       all_args: default
 
@@ -18,7 +18,7 @@
       fields:
         data: disabled # FIXME: hash up to buf.size bytes
 
-../src/markdown.rs:
+src/markdown.rs:
     - item: defaults
       all_args: default
 
@@ -36,7 +36,7 @@
       fields:
         data: disabled # FIXME: hash up to buf.size bytes
 
-../src/stack.rs:
+src/stack.rs:
     - item: defaults
       all_args: default
 
